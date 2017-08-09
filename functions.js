@@ -1,8 +1,8 @@
 //draw everything to canvas
 function draw()
 {
-    settings.rectangle.drawPosition.lastWidth  = 1;
-    settings.rectangle.drawPosition.lastHeight = 1;
+    settings.rectangle.drawPosition.lastWidth  = 0;
+    settings.rectangle.drawPosition.lastHeight = 0;
     for( let i=1; i <= settings.game.areaWidth * settings.game.areaHeight; i++ )
     {
         ctx.beginPath();
@@ -28,6 +28,17 @@ function update()
         () => {
             clear();
             draw();
+
+            if ( players.p1.score != MEMORY.scores.player1 )
+            {
+                elements.player1Score.innerHTML = players.p1.score;
+                MEMORY.scores.player1 = players.p1.score;
+            }
+            else if (players.p2.score != MEMORY.scores.player2)
+            {
+                elements.player2Score.innerHTML = players.p2.score;
+                MEMORY.scores.player2 = players.p2.score;
+            }
         },
         1000 / settings.draw.fps
     );
@@ -39,6 +50,11 @@ function clear()
     ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
+function start()
+{
+    update();
+}
+
 function stop(_clear=true)
 {
     clearInterval(gameInterval);
@@ -46,11 +62,24 @@ function stop(_clear=true)
     console.log("[?]-Game stopped.");
 }
 
+function getDistanceBetween( obj1, obj2 ){}
+
+//@return: object
+function findWhichRectangle(x,y){
+    w = Math.ceil(x / settings.rectangle.rectWidth) - 1; //index of rect. w
+    h = Math.ceil(y / settings.rectangle.rectHeight) - 1; //index of rect. h
+
+    return { widthIndex : w, heightIndex : h }
+}
+
 //mark player's choice - XO
 function mark(){}
 
 //check move is valid
 function isValid(){}
+
+//put X or O to inside of rectangle
+function putObject(){}
 
 //initialize the game
 function init()
@@ -63,5 +92,9 @@ function init()
         for( let j=0; j < settings.game.areaWidth; j++ )
             board[i].push([])
     }
-    update();
+    //determine who is X and O
+    players.p1.object = ["X","O"][Math.floor(Math.random() * 2)];
+    players.p2.object = ( players.p1.object == "X" ) ? "O" : "X";
+    //invoke start() function
+    start();
 }

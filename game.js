@@ -16,11 +16,33 @@ settings["rectangle"] = {
     rectWidth  : canvas.width / settings.game.areaWidth,
     rectHeight : canvas.height / settings.game.areaHeight,
     drawPosition : {
-        lastWidth : 1,
-        lastHeight : 1
+        lastWidth : null, //will be edited in draw() function.
+        lastHeight : null
     }
 };
-const scores = {
-    player1 : 0,
-    player2 : 0
+const MEMORY = {
+  scores : {
+      player1 : scores.player1,
+      player2 : scores.player2
+  }
+};
+const elements = {
+  player1Score : document.getElementById("p1-score"),
+  player2Score : document.getElementById("p2-score"),
+  currentMove  : document.getElementById("move-ind")
+};
+const players = {
+    p1 : {
+        string : "p1",
+        score : 0,
+        object : null //X or O
+    },
+    p2 : {
+        string : "p2",
+        score : 0,
+        object : null //X or O
+    }
+};
+const GAME = {
+    currentMove : players.p1.string
 };

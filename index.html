@@ -4,11 +4,37 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>XOX Game</title>
+    <style>
+        .block { display: block; }\
+        canvas#canvas
+        {
+            border: 2px solid black;
+        }
+    </style>
 </head>
 <body>
-    <canvas width="500" height="500" id="canvas" style="border: 0 solid black;"></canvas>
+    <canvas width="500" height="500" id="canvas"></canvas>
+    <div id="scores">
+        <b style="margin-bottom: 5px;" class="block">Scores:</b>
+        <div id="p1" class="block">
+            <span>
+                Player 1: <span id="p1-score">0</span>
+            </span>
+        </div>
+        <div id="p2" class="block">
+            <span>
+                Player 2: <span id="p2-score">0</span>
+            </span>
+        </div>
+        <div class="block" style="margin-top: 10px;">
+            <b>Current Move:</b>
+            <span id="move-ind"></span>
+        </div>
+    </div>
+
     <script src="game.js"></script>
     <script src="functions.js"></script>
+    <script src="events.js"></script>
 
     <script>
         window.onload=function(){
