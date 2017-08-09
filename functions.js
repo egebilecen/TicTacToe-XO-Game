@@ -17,7 +17,7 @@ function draw()
                 settings.rectangle.rectHeight //height
             );
             ctx.fill();
-            if ( board[h][w] != undefined )
+            if ( board[h][w] !== undefined )
             {
                 ctx.fillStyle = "white";
                 ctx.font = "60px Arial";
@@ -40,22 +40,20 @@ function update()
             draw();
 
             //set scores on html
-            if ( players.p1.score != MEMORY.scores.player1 )
+            if ( players.p1.score !== MEMORY.scores.player1 )
             {
                 elements.player1Score.innerHTML = players.p1.score;
                 MEMORY.scores.player1 = players.p1.score;
             }
-            else if (players.p2.score != MEMORY.scores.player2)
+            else if (players.p2.score !== MEMORY.scores.player2)
             {
                 elements.player2Score.innerHTML = players.p2.score;
                 MEMORY.scores.player2 = players.p2.score;
             }
 
             //set current move's user
-            if (elements.currentMove.innerHTML != GAME.currentMove)
-            {
-                elements.currentMove.innerHTML = GAME.currentMove
-            }
+            if (elements.currentMove.innerHTML !== GAME.currentMove)
+                elements.currentMove.innerHTML = GAME.currentMove.string
         },
         1000 / settings.draw.fps
     );
@@ -92,8 +90,8 @@ function findWhichRectangle(x,y){
 //check move is valid
 function isValid( widthIndex, heightIndex )
 {
-    if ( board[heightIndex][widthIndex] != undefined ) return true;
-    else  return false;
+    if ( board[heightIndex][widthIndex] !== undefined ) return true;
+    else return false;
 }
 
 //put X or O to inside of rectangle
@@ -115,7 +113,7 @@ function init()
     }
     //determine who is X and O
     players.p1.object = ["X","O"][Math.floor(Math.random() * 2)];
-    players.p2.object = ( players.p1.object == "X" ) ? "O" : "X";
+    players.p2.object = ( players.p1.object === "X" ) ? "O" : "X";
     //invoke start() function
     start();
 }
