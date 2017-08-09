@@ -6,10 +6,11 @@ const settings = {
     },
     game : {
         // Game board settings
-        areaWidth  : 3,
+        areaWidth  : 3, //be sure making both of them equal
         areaHeight : 3
     }
 };
+const board = []; //will be edited in init() function.
 // reactange's settings
 settings["rectangle"] = {
     rectWidth  : canvas.width / settings.game.areaWidth,
