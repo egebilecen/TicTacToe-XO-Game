@@ -10,15 +10,16 @@ const settings = {
         areaHeight : 3
     }
 };
-const scores = {
-    player1 : 0,
-    player2 : 0
-};
-settings["rectange"] = {
+// reactange's settings
+settings["rectangle"] = {
     rectWidth  : canvas.width / settings.game.areaWidth,
     rectHeight : canvas.height / settings.game.areaHeight,
     drawPosition : {
         lastWidth : 1,
         lastHeight : 1
     }
+};
+const scores = {
+    player1 : 0,
+    player2 : 0
 };
