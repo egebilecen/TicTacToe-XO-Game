@@ -1,23 +1,33 @@
 //draw everything to canvas
 function draw()
 {
-    settings.rectangle.drawPosition.lastWidth  = 0;
+    let colorIndex = 1;
     settings.rectangle.drawPosition.lastHeight = 0;
-    for( let i=1; i <= settings.game.areaWidth * settings.game.areaHeight; i++ )
+    for( let h=0; h < board.length; h++ )
     {
-        ctx.beginPath();
-        ctx.fillStyle = !(i % 2) ? "pink":"purple";
-        ctx.rect(
-            settings.rectangle.drawPosition.lastWidth, //x
-            settings.rectangle.drawPosition.lastHeight, //y
-            settings.rectangle.rectWidth, //width
-            settings.rectangle.rectHeight //height
-        );
-        ctx.fill();
-        ctx.closePath();
-        settings.rectangle.drawPosition.lastWidth = !(i % settings.game.areaWidth) ? 0 : settings.rectangle.drawPosition.lastWidth + settings.rectangle.rectWidth;
-        if( !(i % settings.game.areaHeight) )
-            settings.rectangle.drawPosition.lastHeight += settings.rectangle.rectHeight;
+        settings.rectangle.drawPosition.lastWidth  = 0;
+        for( let w=0; w < board[h].length; w++ )
+        {
+            ctx.beginPath();
+            ctx.fillStyle = !(colorIndex % 2) ? "pink":"purple";
+            ctx.rect(
+                settings.rectangle.drawPosition.lastWidth, //x
+                settings.rectangle.drawPosition.lastHeight, //y
+                settings.rectangle.rectWidth, //width
+                settings.rectangle.rectHeight //height
+            );
+            ctx.fill();
+            if ( board[h][w] != undefined )
+            {
+                ctx.fillStyle = "white";
+                ctx.font = "60px Arial";
+                ctx.fillText(board[h][w],settings.rectangle.drawPosition.lastWidth+60,settings.rectangle.drawPosition.lastHeight+100);
+            }
+            ctx.closePath();
+            settings.rectangle.drawPosition.lastWidth += settings.rectangle.rectWidth;
+            colorIndex += 1;
+        }
+        settings.rectangle.drawPosition.lastHeight += settings.rectangle.rectHeight;
     }
 }
 
@@ -29,6 +39,7 @@ function update()
             clear();
             draw();
 
+            //set scores on html
             if ( players.p1.score != MEMORY.scores.player1 )
             {
                 elements.player1Score.innerHTML = players.p1.score;
@@ -38,6 +49,12 @@ function update()
             {
                 elements.player2Score.innerHTML = players.p2.score;
                 MEMORY.scores.player2 = players.p2.score;
+            }
+
+            //set current move's user
+            if (elements.currentMove.innerHTML != GAME.currentMove)
+            {
+                elements.currentMove.innerHTML = GAME.currentMove
             }
         },
         1000 / settings.draw.fps
@@ -72,14 +89,18 @@ function findWhichRectangle(x,y){
     return { widthIndex : w, heightIndex : h }
 }
 
-//mark player's choice - XO
-function mark(){}
-
 //check move is valid
-function isValid(){}
+function isValid( widthIndex, heightIndex )
+{
+    if ( board[heightIndex][widthIndex] != undefined ) return true;
+    else  return false;
+}
 
 //put X or O to inside of rectangle
-function putObject(){}
+function putObject(obj,widthIndex,heightIndex)
+{
+    board[heightIndex][widthIndex] = obj;
+}
 
 //initialize the game
 function init()

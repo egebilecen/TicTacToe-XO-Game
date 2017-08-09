@@ -11,7 +11,7 @@ const settings = {
     }
 };
 const board = []; //will be edited in init() function.
-// reactange's settings
+// rectangle's settings
 settings["rectangle"] = {
     rectWidth  : canvas.width / settings.game.areaWidth,
     rectHeight : canvas.height / settings.game.areaHeight,
@@ -20,12 +20,6 @@ settings["rectangle"] = {
         lastHeight : null
     }
 };
-const MEMORY = {
-  scores : {
-      player1 : scores.player1,
-      player2 : scores.player2
-  }
-};
 const elements = {
   player1Score : document.getElementById("p1-score"),
   player2Score : document.getElementById("p2-score"),
@@ -33,16 +27,22 @@ const elements = {
 };
 const players = {
     p1 : {
-        string : "p1",
+        string : "Player 1",
         score : 0,
         object : null //X or O
     },
     p2 : {
-        string : "p2",
+        string : "Player 2",
         score : 0,
         object : null //X or O
     }
 };
 const GAME = {
-    currentMove : players.p1.string
+    currentMove : players.p1
+};
+const MEMORY = {
+    scores : {
+        player1 : players.p1.score,
+        player2 : players.p2.score
+    }
 };
