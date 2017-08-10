@@ -34,29 +34,24 @@ function draw()
 //update things' pos. on canvas
 function update()
 {
-    gameInterval = setInterval(
-        () => {
-            clear();
-            draw();
+    clear();
+    draw();
 
-            //set scores on html
-            if ( players.p1.score !== MEMORY.scores.player1 )
-            {
-                elements.player1Score.innerHTML = players.p1.score;
-                MEMORY.scores.player1 = players.p1.score;
-            }
-            else if (players.p2.score !== MEMORY.scores.player2)
-            {
-                elements.player2Score.innerHTML = players.p2.score;
-                MEMORY.scores.player2 = players.p2.score;
-            }
+    //set scores on html
+    if ( players.p1.score !== MEMORY.scores.player1 )
+    {
+        elements.player1Score.innerHTML = players.p1.score;
+        MEMORY.scores.player1 = players.p1.score;
+    }
+    else if (players.p2.score !== MEMORY.scores.player2)
+    {
+        elements.player2Score.innerHTML = players.p2.score;
+        MEMORY.scores.player2 = players.p2.score;
+    }
 
-            //set current move's user
-            if (elements.currentMove.innerHTML !== GAME.currentMove)
-                elements.currentMove.innerHTML = GAME.currentMove.string
-        },
-        1000 / settings.draw.fps
-    );
+    //set current move's user
+    if (elements.currentMove.innerHTML !== players["p"+GAME.currentMove].string+" - "+players["p"+GAME.currentMove].object)
+        elements.currentMove.innerHTML = players["p"+GAME.currentMove].string+" - "+players["p"+GAME.currentMove].object
 }
 
 //clear specific canvas
@@ -67,17 +62,58 @@ function clear()
 
 function start()
 {
-    update();
+    gameInterval = setInterval(
+        () => {
+            update();
+        },
+        1000 / settings.draw.fps
+    );
 }
 
 function stop(_clear=true)
 {
     clearInterval(gameInterval);
     if(_clear) clear();
+    elements.gameMsg.innerHTML = "Game stopped.";
     console.log("[?]-Game stopped.");
 }
 
-function getDistanceBetween( obj1, obj2 ){}
+function makeMove(posX,posY)
+{
+    let fRect = findWhichRectangle(posX,posY);
+    if ( isValid(fRect.widthIndex,fRect.heightIndex) )
+    {
+        putObject(players["p"+GAME.currentMove].object,fRect.widthIndex,fRect.heightIndex);
+        elements.gameMsg.innerHTML = "-";
+
+        if ( controlCurrentStatus() ) //if this player got point
+            resetBoard();
+
+        GAME.currentMove = (GAME.currentMove === 1) ? 2 : 1;
+    }
+    else
+        elements.gameMsg.innerHTML = "Please make a valid move.";
+}
+
+function controlCurrentStatus(){}
+
+function createBoard() //create board based on game settings
+{
+    board = [];
+    for( let i=0; i < settings.game.areaHeight; i++ )
+    {
+        board.push([]);
+        for( let j=0; j < settings.game.areaWidth; j++ )
+            board[i].push([])
+    }
+    console.log("[?]-Board has been created.");
+}
+
+function resetBoard()
+{
+    createBoard();
+    console.log("[?]-Board has been reset.");
+}
 
 //@return: object
 function findWhichRectangle(x,y){
@@ -90,8 +126,7 @@ function findWhichRectangle(x,y){
 //check move is valid
 function isValid( widthIndex, heightIndex )
 {
-    if ( board[heightIndex][widthIndex] !== undefined ) return true;
-    else return false;
+    return board[heightIndex][widthIndex].length === 0;
 }
 
 //put X or O to inside of rectangle
@@ -105,12 +140,7 @@ function init()
 {
     console.log("[?]-Game initializing.");
     //init board array
-    for( let i=0; i < settings.game.areaHeight; i++ )
-    {
-        board.push([]);
-        for( let j=0; j < settings.game.areaWidth; j++ )
-            board[i].push([])
-    }
+    createBoard();
     //determine who is X and O
     players.p1.object = ["X","O"][Math.floor(Math.random() * 2)];
     players.p2.object = ( players.p1.object === "X" ) ? "O" : "X";

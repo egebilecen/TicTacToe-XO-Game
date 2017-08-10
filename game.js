@@ -10,7 +10,7 @@ const settings = {
         areaHeight : 3
     }
 };
-const board = []; //will be edited in init() function.
+board = []; //will be edited in init() function.
 // rectangle's settings
 settings["rectangle"] = {
     rectWidth  : canvas.width / settings.game.areaWidth,
@@ -21,9 +21,10 @@ settings["rectangle"] = {
     }
 };
 const elements = {
-  player1Score : document.getElementById("p1-score"),
-  player2Score : document.getElementById("p2-score"),
-  currentMove  : document.getElementById("move-ind")
+    player1Score : document.getElementById("p1-score"),
+    player2Score : document.getElementById("p2-score"),
+    currentMove  : document.getElementById("move-ind"),
+    gameMsg      : document.getElementById("game-msg")
 };
 const players = {
     p1 : {
@@ -38,7 +39,7 @@ const players = {
     }
 };
 const GAME = {
-    currentMove : players.p1
+    currentMove : 1 //1 - p1 , 2 - p2
 };
 const MEMORY = {
     scores : {

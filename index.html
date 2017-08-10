@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>XOX Game</title>
     <style>
-        .block { display: block; }\
+        .block { display: block; }
         canvas#canvas
         {
             border: 2px solid black;
@@ -14,7 +14,7 @@
 </head>
 <body>
     <canvas width="500" height="500" id="canvas"></canvas>
-    <div id="scores">
+    <div id="main">
         <b style="margin-bottom: 5px;" class="block">Scores:</b>
         <div id="p1" class="block">
             <span>
@@ -29,6 +29,10 @@
         <div class="block" style="margin-top: 10px;">
             <b class="block" style="margin-bottom:5px;">Current Move:</b>
             <span id="move-ind"></span>
+        </div>
+        <div class="block" style="margin: 10px 0">
+            <b class="block">Game Message:</b>
+            <span id="game-msg" style="font-size: 35px; color: red;">-</span>
         </div>
     </div>
 
