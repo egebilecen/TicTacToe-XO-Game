@@ -95,70 +95,7 @@ function makeMove(posX,posY)
         elements.gameMsg.innerHTML = "Please make a valid move.";
 }
 
-function controlHorizontal()
-{
-    for( let h=0; h < settings.game.areaHeight; h++ )
-    {
-        let countX = 0; //count of X object
-        let countO = 0; //count of O object
-        for( let w=0; w < settings.game.areaWidth; w++ )
-        {
-            if( board[h][w] === "X" ) countX++;
-            else if ( board[h][w] === "O" ) countO++;
-        }
-        if (countX >= 3) //increase score of player
-        {
-            ( players.p1.object === "X") ? players.p1.score++ : players.p2.score++;
-            elements.gameMsg.innerHTML = ( players.p1.object === "X") ? "Player 1 won!" : "Player 2 won!";
-            return true;
-        }
-        else if(countO >= 3)
-        {
-            ( players.p1.object === "O") ? players.p1.score++ : players.p2.score++;
-            elements.gameMsg.innerHTML = ( players.p1.object === "X") ? "Player 1 won!" : "Player 2 won!";
-            return true;
-        }
-    }
-    return false;
-}
-
-function controlVertical()
-{
-    for( let w=0; w < settings.game.areaWidth; w++ )
-    {
-        let countX = 0;
-        let countO = 0;
-        for( let h=0; h < settings.game.areaHeight; h++ )
-        {
-            if( board[h][w] === "X" ) countX++;
-            else if ( board[h][w] === "O" ) countO++;
-        }
-        if (countX >= 3) //increase score of player
-        {
-            ( players.p1.object === "X") ? players.p1.score++ : players.p2.score++;
-            elements.gameMsg.innerHTML = ( players.p1.object === "X") ? "Player 1 won!" : "Player 2 won!";
-            return true;
-        }
-        else if(countO >= 3)
-        {
-            ( players.p1.object === "O") ? players.p1.score++ : players.p2.score++;
-            elements.gameMsg.innerHTML = ( players.p1.object === "X") ? "Player 1 won!" : "Player 2 won!";
-            return true;
-        }
-    }
-    return false;
-}
-
-function controlCurrentStatus()
-{
-    if(controlHorizontal())
-        return true;
-    else
-        if(controlVertical())
-            return true;
-        else
-            return false;
-}
+function controlCurrentStatus(){}
 
 function createBoard() //create board based on game settings
 {
@@ -174,8 +111,8 @@ function createBoard() //create board based on game settings
 
 function resetBoard()
 {
-    console.log("[?]-Board has been reset.");
     createBoard();
+    console.log("[?]-Board has been reset.");
 }
 
 //@return: object
