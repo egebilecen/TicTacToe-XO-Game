@@ -186,7 +186,7 @@ function findWhichRectangle(x,y){
     return { widthIndex : w, heightIndex : h }
 }
 
-//check move is valid
+//check is move valid
 function isValid( widthIndex, heightIndex )
 {
     return board[heightIndex][widthIndex].length === 0;
