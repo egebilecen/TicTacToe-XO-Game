@@ -80,19 +80,40 @@ function stop(_clear=true)
 
 function makeMove(posX,posY)
 {
-    let fRect = findWhichRectangle(posX,posY);
-    if ( isValid(fRect.widthIndex,fRect.heightIndex) )
+    if( GAME.status && GAME.totalMove < settings.game.areaWidth*settings.game.areaHeight )
     {
-        putObject(players["p"+GAME.currentMove].object,fRect.widthIndex,fRect.heightIndex);
-        elements.gameMsg.innerHTML = "-";
+        let fRect = findWhichRectangle(posX,posY);
+        if ( isValid(fRect.widthIndex,fRect.heightIndex) )
+        {
+            putObject(players["p"+GAME.currentMove].object,fRect.widthIndex,fRect.heightIndex);
+            elements.gameMsg.innerHTML = "-";
 
-        if ( controlCurrentStatus() ) //if this player got point
-            resetBoard();
+            if ( controlCurrentStatus() ) //if a player got point
+            {
+                GAME.status = 0;
+                setTimeout(()=>{
+                    GAME.totalMove = 0;
+                    resetBoard();
+                    GAME.status = 1;
+                },2000);
+            }
 
-        GAME.currentMove = (GAME.currentMove === 1) ? 2 : 1;
+            GAME.currentMove = (GAME.currentMove === 1) ? 2 : 1;
+            GAME.totalMove++;
+
+            //control current status. is it draw or not
+            if ( GAME.totalMove >= settings.game.areaWidth*settings.game.areaHeight )
+            {
+                elements.gameMsg.innerHTML = "Draw!";
+                setTimeout(() => {
+                    GAME.totalMove = 0;
+                    resetBoard();
+                },1500);
+            }
+        }
+        else
+            elements.gameMsg.innerHTML = "Please make a valid move.";
     }
-    else
-        elements.gameMsg.innerHTML = "Please make a valid move.";
 }
 
 function controlHorizontal()
@@ -142,7 +163,7 @@ function controlVertical()
         else if(countO >= 3)
         {
             ( players.p1.object === "O") ? players.p1.score++ : players.p2.score++;
-            elements.gameMsg.innerHTML = ( players.p1.object === "X") ? "Player 1 won!" : "Player 2 won!";
+            elements.gameMsg.innerHTML = ( players.p1.object === "O") ? "Player 1 won!" : "Player 2 won!";
             return true;
         }
     }

@@ -39,7 +39,9 @@ const players = {
     }
 };
 const GAME = {
-    currentMove : 1 //1 - p1 , 2 - p2
+    currentMove : 1, //1 - p1 , 2 - p2
+    totalMove : 0,
+    status : 1 // 1-playing, 2-pause
 };
 const MEMORY = {
     scores : {
