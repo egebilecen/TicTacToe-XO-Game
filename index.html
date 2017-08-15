@@ -39,11 +39,39 @@
     <script src="game.js"></script>
     <script src="functions.js"></script>
     <script src="events.js"></script>
-
     <script>
+        __isSocketOpen = false;
         window.onload=function(){
             //init. game
             init();
+
+            //init. socket
+            const socket = new WebSocket("ws://localhost:6969/");
+            socket.onopen = function(e){
+                //open event
+                __isSocketOpen = true;
+            };
+            socket.onclose = function(e){
+                //close event
+                if( __isSocketOpen )
+                {
+                    console.log("Socket has been closed.");
+
+                    __isSocketOpen = false;
+                }
+            };
+            socket.onerror = function(e){
+                //error event
+                if( !__isSocketOpen )
+                {
+                    console.log("Socket error!");
+                }
+            };
+            socket.onmessage = function(data){
+                //message event
+                console.log("Data from server:");
+                console.log(data);
+            };
         }
     </script>
 </body>

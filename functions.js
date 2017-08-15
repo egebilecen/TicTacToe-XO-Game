@@ -223,6 +223,10 @@ function putObject(obj,widthIndex,heightIndex)
 function init()
 {
     console.log("[?]-Game initializing.");
+    //reset the things
+    players.p1.score = 0;
+    players.p2.score = 0;
+    GAME.currentMove = 1;
     //init board array
     createBoard();
     //determine who is X and O
@@ -230,4 +234,12 @@ function init()
     players.p2.object = ( players.p1.object === "X" ) ? "O" : "X";
     //invoke start() function
     start();
+}
+
+//reset the game
+function reset()
+{
+    stop();
+    init();
+    elements.gameMsg.innerHTML = "Game has been reset.";
 }
