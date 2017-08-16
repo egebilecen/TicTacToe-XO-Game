@@ -5,7 +5,7 @@ document.body.addEventListener("click",(e)=>{
     e.preventDefault();
 });
 canvas.addEventListener("click",(e)=>{
-    let pageMargin = 8;
+    let pageMargin = 0;
     let posX = e.pageX - pageMargin;
     let posY = e.pageY - pageMargin;
 

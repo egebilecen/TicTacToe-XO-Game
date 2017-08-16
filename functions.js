@@ -9,7 +9,7 @@ function draw()
         for( let w=0; w < board[h].length; w++ )
         {
             ctx.beginPath();
-            ctx.fillStyle = !(colorIndex % 2) ? "pink":"purple";
+            ctx.fillStyle = !(colorIndex % 2) ? settings.game.boardColor[0]:settings.game.boardColor[1];
             ctx.rect(
                 settings.rectangle.drawPosition.lastWidth, //x
                 settings.rectangle.drawPosition.lastHeight, //y

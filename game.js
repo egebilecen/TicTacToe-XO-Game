@@ -7,7 +7,8 @@ const settings = {
     game : {
         // Game board settings
         areaWidth  : 3, //be sure making both of them equal
-        areaHeight : 3
+        areaHeight : 3,
+        boardColor : ["magenta","purple"] //only 2 elements
     }
 };
 board = []; //will be edited in init() function.

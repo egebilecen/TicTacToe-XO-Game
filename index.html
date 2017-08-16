@@ -5,14 +5,29 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>XOX Game</title>
     <style>
+        html,body { margin:0; width: 100%; height:100%; font-family: "Arial",serif; }
         .block { display: block; }
-        canvas#canvas
-        {
-            border: 2px solid black;
+        .hidden { display: none; }
+        canvas#canvas { border: 2px solid black; }
+        #start {
+            width: 100%;
+            height: 100%;
+            background: black;
+            position: absolute;
+            left: 0;
+            top:0;
+            display: block;
+            color: #ffffff;
+            text-align: center;
         }
     </style>
 </head>
 <body>
+    <div id="start">
+        <h1>Multiplayer Tic-Tac-Toe Game</h1>
+        <p id="conn-status-1" class="hidden">Successfully connected to server.</p>
+        <p id="conn-status-0" class="hidden"><b>[Error]</b> Cannot connect to server. Please be sure that your connection is stable.</p>
+    </div>
     <canvas width="500" height="500" id="canvas"></canvas>
     <div id="main">
         <b style="margin-bottom: 5px;" class="block">Scores:</b>
@@ -40,6 +55,10 @@
     <script src="functions.js"></script>
     <script src="events.js"></script>
     <script>
+        const __elements = {
+          connStatus0 : document.getElementById("conn-status-0"),
+          connStatus1 : document.getElementById("conn-status-1")
+        };
         __isSocketOpen = false;
         window.onload=function(){
             //init. game
@@ -50,13 +69,14 @@
             socket.onopen = function(e){
                 //open event
                 __isSocketOpen = true;
+                __elements.connStatus1.style.display = "block";
+                socket.send("Merhaba!");
             };
             socket.onclose = function(e){
                 //close event
                 if( __isSocketOpen )
                 {
                     console.log("Socket has been closed.");
-
                     __isSocketOpen = false;
                 }
             };
@@ -64,6 +84,7 @@
                 //error event
                 if( !__isSocketOpen )
                 {
+                    __elements.connStatus0.style.display = "block";
                     console.log("Socket error!");
                 }
             };
